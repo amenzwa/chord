@@ -18,7 +18,7 @@ export function Chord(kind: C, root: R): Chord {
   }
   return {name: nameOf(), notes: notesOf()};
 }
-export function stringOf(c: Chord): string { return `${c.name}: ${c.notes.join(" ")}`; }
+export function stringOf(c: Chord): string { return `${c.name}: ${c.notes.join("-")}`; }
 
 const cc = Object.freeze({ // chord intervals
   "Aug7": ["P1=d2", "M3=d4", "m6=A5", "m7=A6"],
