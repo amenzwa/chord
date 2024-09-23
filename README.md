@@ -1,2 +1,2 @@
 # chord
-This project implements a simple jazz chord generator for all keys in TypeScript.
+This project implements a simple generator for common jazz chords in TypeScript.
