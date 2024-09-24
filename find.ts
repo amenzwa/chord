@@ -13,6 +13,7 @@ commands:\n\
   q - quit (also ^c)`);
   }
   clear();
+  help();
   let quit = false;
   while (!quit) {
     setDefaultOptions({prompt: "\nchord> "});
@@ -46,6 +47,7 @@ select a root note for a chord:\n\
   ^c - quit`);
   }
   clear();
+  help();
   let back = false;
   while (!back) {
     setDefaultOptions({prompt: "\nchord.root> "});
@@ -92,6 +94,7 @@ select a chord type for the root note ${r}:\n\
   ^c - quit`);
   }
   clear();
+  help();
   let back = false;
   while (!back) {
     setDefaultOptions({prompt: "\nchord.type> "});
@@ -107,7 +110,7 @@ select a chord type for the root note ${r}:\n\
     case "Maj7":
     case "Aug7":
       const c = sub as C;
-      log(`  ${r} ${c}: ${stringOf(Chord(c, r))}`);
+      log(`  ${stringOf(Chord(c, r))}\n`);
       break;
     case "h":
       help();
