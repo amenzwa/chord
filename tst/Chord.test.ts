@@ -1,8 +1,8 @@
 import {describe, expect, test} from "@jest/globals";
-import {C, Chord, R, rn, stringOf} from "../src/Chord";
+import {C, Chord, R, roots, stringOf} from "../src/Chord";
 
 describe("Chord tests", () => {
-  rn.map(r => {
+  roots().map(r => {
     test(`test ${r} chords`, () => {
       expect(cc[r].length > 0).toBeTruthy();
       cc[r].map(([c, nn]) => { expect(stringOf(Chord(c as C, r as R))).toEqual(`${r} ${c}: ${nn}`); });
@@ -10,7 +10,7 @@ describe("Chord tests", () => {
   });
 });
 
-const cc: Readonly<Record<string, [string, string][]>> = Object.freeze({ // chords
+const cc: Record<string, [string, string][]> = { // chords test data
   "C": [
     ["dim7", "C-Eb-Gb-A"],
     ["hd7", "C-Eb-Gb-Bb"],
@@ -131,4 +131,4 @@ const cc: Readonly<Record<string, [string, string][]>> = Object.freeze({ // chor
     ["Dom7", "B-D#-F#-A"],
     ["Maj7", "B-D#-F#-A#"],
     ["Aug7", "B-D#-G-A"]],
-});
+};
