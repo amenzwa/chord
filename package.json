@@ -1,6 +1,21 @@
 {
+  "description": "This project implements a simple generator for common jazz chords in TypeScript.",
+  "author": {
+    "name": "Amen Zwa, Esq.",
+    "url": "https://amenzwa.github.io/"
+  },
+  "homepage": "https://github.com/amenzwa/chord#readme",
+  "keywords": ["jazz", "chord", "TypeScript"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amenzwa/chord.git"
+  },
   "scripts": {
-    "test": "jest"
+    "build": "tsc",
+    "test": "jest",
+    "generate": "node ./out/generate.js",
+    "clean": "rm -rf ./out"
   },
   "jest": {
     "preset": "ts-jest"

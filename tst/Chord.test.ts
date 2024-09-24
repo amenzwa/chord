@@ -1,8 +1,8 @@
 import {describe, expect, test} from "@jest/globals";
-import {C, Chord, R, rr, stringOf} from "../src/Chord";
+import {C, Chord, R, rn, stringOf} from "../src/Chord";
 
 describe("Chord tests", () => {
-  rr.map(r => {
+  rn.map(r => {
     test(`test ${r} chords`, () => {
       expect(cc[r].length > 0).toBeTruthy();
       cc[r].map(([c, nn]) => { expect(stringOf(Chord(c as C, r as R))).toEqual(`${r} ${c}: ${nn}`); });

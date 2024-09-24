@@ -1,13 +1,15 @@
 export type R = "C" | "Db" | "D" | "Eb" | "E" | "F" | "Gb" | "G" | "Ab" | "A" | "Bb" | "B" // root notes of chords
-export const rr: Readonly<R[]> = Object.freeze(["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]); // root note indices
+export const rn: Readonly<R[]> = Object.freeze(["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]);
 
 export type C = "dim7" | "hd7" | "min6" | "min7" | "mM7" | "Maj6" | "Dom7" | "Maj7" | "Aug7" // chords
+export const cn: Readonly<C[]> = Object.freeze(["dim7", "hd7", "min6", "min7", "mM7", "Maj6", "Dom7", "Maj7", "Aug7"]);
+
 export type Chord = Readonly<{ name: string, notes: string[] }>
 export function Chord(kind: C, root: R): Chord {
   function nameOf(): string { return `${root.split("=")[0]} ${kind}`; }
   function notesOf(): string[] {
     function note(interval: string, index: number): string {
-      const r: number = rr.indexOf(root); // root note index
+      const r: number = rn.indexOf(root); // root note index
       const d: string = uu[(uu.indexOf(root[0]) + 2 * index) % 7]; // mod 7 group; degree index = 2 * interval index
       const i: number = (r + ii.indexOf(interval)) % 12; // mod 12 group; interval index
       const [b, x] = nn[i].split("=");
