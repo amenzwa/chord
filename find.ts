@@ -7,10 +7,10 @@ function loop(): void {
   function help(): void {
     log(`\
 commands:\n\
-  r - select chord root notes\n\
+  r  - select chord root notes\n\
   ----\n\
-  h - help (this message)\n\
-  q - quit (also ^c)`);
+  h  - help (this message)\n\
+  ^c - quit (also q)`);
   }
   clear();
   help();
@@ -20,7 +20,7 @@ commands:\n\
     const cmd = prompt();
     switch (cmd) {
     case "r":
-      rootCommands();
+      rootMenu();
       break;
     case "h":
       help();
@@ -36,7 +36,7 @@ commands:\n\
   }
 }
 
-function rootCommands(): void {
+function rootMenu(): void {
   function help(): void {
     log(`\
 select a root note for a chord:\n\
@@ -65,7 +65,7 @@ select a root note for a chord:\n\
     case "A":
     case "Bb":
     case"B":
-      chordCommands(sub as R);
+      chordMenu(sub as R);
       break;
     case "h":
       help();
@@ -81,7 +81,7 @@ select a root note for a chord:\n\
   }
 }
 
-function chordCommands(r: R): void {
+function chordMenu(r: R): void {
   function help(): void {
     log(`\
 select a chord type for the root note ${r}:\n\
