@@ -1,3 +1,7 @@
+/* This module creates common jazz chords for all 12 notes.
+ * Author: Amen Zwa, Esq.
+ * Copyright: sOnit, Inc. */
+
 export type I = (typeof ii)[number]; // intervals
 export type R = (typeof rr)[number]; // root note of chords
 export type C = (typeof cc)[number]; // chords
@@ -25,7 +29,7 @@ export function chords(): Readonly<string[]> { return cc; }
 const rr = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"] as const; // root note names
 const cc = ["dim7", "hd7", "min6", "min7", "mM7", "Maj6", "Dom7", "Maj7", "Aug7"] as const; // chord names
 const ww = ["C", "D", "E", "F", "G", "A", "B"]; // whole-step note names
-const hh = ["C=B#", "Db=C#", "D=D", "Eb=D#", "Fb=E", "F=E#", "Gb=F#", "G=G", "Ab=G#", "A=A", "Bb=A#", "Cb=B"]; // half-step note names
+const hh = ["C=C", "Db=C#", "D=D", "Eb=D#", "E=E", "F=F", "Gb=F#", "G=G", "Ab=G#", "A=A", "Bb=A#", "B=B"]; // half-step note names
 const ii = ["P1=d2", "m2=A1", "M2=d3", "m3=A2", "M3=d4", "P4=A3", "A4=d5", "P5=d6", "m6=A5", "M6=d7", "m7=A6", "M7=d8"]; // interval names
 const ci: Record<C, I[]> = { // chord intervals
   "dim7": ["P1=d2", "m3=A2", "A4=d5", "M6=d7"],

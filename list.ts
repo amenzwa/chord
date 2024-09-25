@@ -1,3 +1,7 @@
+/* This module lists the chords for all 12 notes.
+ * Author: Amen Zwa, Esq.
+ * Copyright: sOnit, Inc. */
+
 import {C, Chord, chords, R, roots, stringOf} from "./src/Chord";
 
 roots().map(r => {

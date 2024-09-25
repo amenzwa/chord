@@ -1,3 +1,7 @@
+/* This module implements a TUI for the chord finder.
+ * Author: Amen Zwa, Esq.
+ * Copyright: sOnit, Inc. */
+
 import {prompt, setDefaultOptions} from "readline-sync";
 import {C, Chord, R, stringOf} from "./src/Chord";
 
@@ -7,7 +11,7 @@ function loop(): void {
   function help(): void {
     log(`\
 commands:\n\
-  r  - select chord root notes\n\
+  r  - select the chord root note\n\
   ----\n\
   h  - help (this message)\n\
   ^c - quit (also q)`);
