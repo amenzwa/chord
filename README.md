@@ -84,15 +84,15 @@ chord.root>
 
 This takes us to the ***chord.type*** screen shown below, where we are presented with the chord type menu. The following chords are currently supported:
 
-- `dim7` diminished 7th
-- `hd7` half-diminished 7th
-- `min6` minor 6th
-- `min7` minor 7th
-- `mM7` minor-Major 7th
-- `Maj6` Major 6th
-- `Dom7` Dominant 7th
-- `Maj7` Major 7th
-- `Aug7` Augmented 7th
+- `dim7—diminished 7th
+- `hd7`—half-diminished 7th
+- `min6`—minor 6th
+- `min7`—minor 7th
+- `mM7`—minor-Major 7th
+- `Maj6`—Major 6th
+- `Dom7`—Dominant 7th
+- `Maj7`—Major 7th
+- `Aug7`—Augmented 7th
 
 When we type in `Aug7` at the `chord.type> ` prompt, we see on the screen the 1st, 3rd, 5th, and 7th notes of the A Aug7 chord, which are A-C♯-F-G.
 
@@ -148,7 +148,7 @@ Shrinking a Major interval by one semitone yields a minor interval. Shrinking a 
 - [C, E↓] = [C, E♭]—m3
 - [C, E↓↓] = [C, E♭↓] = [C, D]—d3 (same as M2)
 
-A basic jazz [*chord*](https://en.wikipedia.org/wiki/Chord_(music)) is constructed out of 4 notes—1st, 3rd, 5th, and 7th—which spans the entire octave. The intervals between two adjacent chord tone determines the chord quality. At present, we will ignore advanced chords—extended, altered, suspended, etc.—, and discuss only the basic chords, whose qualities are diminished, minor, Major, and Augmented:
+A basic jazz [*chord*](https://en.wikipedia.org/wiki/Chord_(music)) is constructed out of 4 notes—1st, 3rd, 5th, and 7th—which spans the entire octave. The intervals between two adjacent chord tone determines the chord quality. At present, we will ignore advanced chords—extended, altered, suspended, etc.—and discuss only the basic chords, whose qualities are diminished, minor, Major, and Augmented:
 
 - dim7—P1=d2, m3=A2, A4=d5, M6=d7
 - hd7—P1=d2, m3=A2, A4=d5, m7=A6
