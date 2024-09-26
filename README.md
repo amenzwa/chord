@@ -1,4 +1,6 @@
 # chord
+## *a simple jazz chord generator*
+
 The modern music notation is the result of many millennia of evolution. Having been invented by humans for the exclusive use of humans, the notation is full of shorthands, variations, duplications, and other oddities. Jazz chord notation in particular has accumulated many inconsistencies, through the ages. This makes implementing a jazz chord generator an interesting programming task.
 
 The most bewildering aspect of music notation is not the usage rules themselves, but the existence of many variations and exceptions to those few rules. When faced with such inconsistencies in programming, often the simplest thing to do is to manually encode both the rules and the exceptions as textual data. This approach is error prone, tiresome, uninspiring. Instead, we implement here a jazz chord generator in the fewest possible lines of code by finding a small set of consistent internal patterns that underlie the myriad outward inconsistencies.
@@ -21,23 +23,66 @@ $ npm run build
 
 I assume that you have the Node environment installed. If not, follow the [installation instructions](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) published on the Node.js site. If you use macOS and the [Homebrew](https://brew.sh) package manager, type in the command `brew install node` at the terminal prompt.
 
+## *list*
+
 To list the chords for all 12 root nodes from C through B, type in this command.
 
 ```sh
 $ npm run list
 ```
 
-And to run the chord finder TUI, type in this command.
+Now, `list` generates the chords and print to the terminal.
+
+```
+C chords
+C dim7: C-Eb-Gb-A
+C hd7: C-Eb-Gb-Bb
+C min6: C-Eb-G-A
+C min7: C-Eb-G-Bb
+C mM7: C-Eb-G-B
+C Maj6: C-E-G-A
+C Dom7: C-E-G-Bb
+C Maj7: C-E-G-B
+C Aug7: C-E-G#-Bb
+
+Db chords
+...
+```
+
+## *find*
+
+To run the chord finder TUI, type in this command.
 
 ```sh
 $ npm run find
 ```
 
-Upon startup, `find` shows the main ***chord*** screen menu which, at present, contains only the `r` command that allows us to select the root note of the chord we are seeking. Other commands will appear here, as this project expands in functionality. Type in `r` at the `chord> ` prompt.
+Upon startup, `find` shows the main ***chord*** screen shown below. The main menu which, at present, contains only the `r` command that allows us to select the root note of the chord we are seeking. Other commands will appear here, as this project expands in functionality. Type in `r` at the `chord> ` prompt.
 
-We now enter the ***chord.root*** screen. Here, we select the root note of the chord we are searching by typing in one of the following: `C`, `Db`, `D`, `Eb`, `E`, `F`, `Gb`, `G`, `Ab`, `A`, `Bb`, or `B`. To select A as the root note, we type in `A` at the `chord.root> ` prompt.
+```
+commands:
+  r  - select the chord root note
+  ----
+  h  - help (this message)
+  ^c - quit (also q)
 
-This takes us to the ***chord.type*** screen, where we are presented with the chord type menu. The following chords are currently supported:
+chord>
+```
+
+We now enter the ***chord.root*** screen shown below. Here, we select the root note of the chord we are searching by typing in one of the following: `C`, `Db`, `D`, `Eb`, `E`, `F`, `Gb`, `G`, `Ab`, `A`, `Bb`, or `B`. To select A as the root note, we type in `A` at the `chord.root> ` prompt.
+
+```
+select a root note for a chord:
+  C Db D Eb E F Gb G Ab A Bb B
+  ----
+  h  - help (this message)
+  b  - back
+  ^c - quit
+
+chord.root>
+```
+
+This takes us to the ***chord.type*** screen shown below, where we are presented with the chord type menu. The following chords are currently supported:
 
 - `dim7` diminished 7th
 - `hd7` half-diminished 7th
@@ -52,18 +97,121 @@ This takes us to the ***chord.type*** screen, where we are presented with the ch
 When we type in `Aug7` at the `chord.type> ` prompt, we see on the screen the 1st, 3rd, 5th, and 7th notes of the A Aug7 chord, which are A-C♯-F-G.
 
 ```
+select a chord type for the root note A:
+  dim7 hd7
+  min6 min7 mM7
+  Maj6 Dom7 Maj7 Aug7
+  ----
+  h  - help (this message)
+  b  - back
+  ^c - quit
+
+chord.type> Aug7
   A Aug7: A-C#-F-G
 ```
 
 Typing in `b` at the `chord.type> ` prompt would exit the ***chord.type*** screen and revert back to the ***chord.root*** screen. From there, typing in another `b` would return to the main ***chord*** screen. At any prompt, typing in `^c` would terminate the application.
 
-# IMPLEMENTATION
+# ANALYSIS
 
-The initial version of this application is implemented in [TypeScript](https://www.typescriptlang.org/) on [Node](https://nodejs.org/en) as a TUI application. Later, we will progress to a desktop GUI application, say using [NodeGui](https://docs.nodegui.org/) JavaScript framework, which is based on the venerable [Qt](https://www.qt.io/product/framework) multi-platform C++ GUI framework. Since the TUI is far simpler to implement than the GUI, the TUI can serve as an exploratory medium to try out different user interaction ideas, before expending the effort to implement the GUI.
+In Modern Western music, an octave is divided into 12 [equally tempered](https://en.wikipedia.org/wiki/12_equal_temperament#:~:text=12%20equal%20temperament%20(12%2DET,12√2%20≈%201.05946).) *notes*: C, D♭=C♯, D, E♭=D♯, E, F, G♭=F♯, G, A♭=G♯, A, B♭=A♯, B. The pitch separation between two adjacent notes is called the [*semitone*](https://en.wikipedia.org/wiki/Semitone) (half step). Two semitones form a tone (whole step). Equal pitched note pairs, like D♭ and C♯, are referred to as [*enharmonic*](https://en.wikipedia.org/wiki/Enharmonic_equivalence) notes, which are conceptually distinct but tonally identical.
+
+Music notation is a 2D representation of vertically stacked frequencies that are horizontally sequenced in time. That is, the *x*-axis is time (perceived as tempo) and the *y*-axis is frequency (perceived as pitch). A melody (a tune) consists of individual notes played across time. A harmony (a chord) consists of multiple notes played at the same time. Since we are working exclusively chords here, the tempo is irrelevant to our present discussion.
+
+The pitch distance between two notes is called the [*interval*](https://en.wikipedia.org/wiki/Interval_(music)). Intervals are named as follows:
+
+- P1=d2—Perfect 1st (unison) = diminished 2nd
+- m2=A1—minor 2nd = Augmented 1st
+- M2=d3—Major 2nd = diminished 3rd
+- m3=A2—minor 3rd = Augmented 2nd
+- M3=d4—Major 3rd = diminished 4th
+- P4=A3—Perfect 4th = Augmented 3rd
+- A4=d5—Augmented 4th = diminished 5th (tritone)
+- P5=d6—Perfect 5th = diminished 6th
+- m6=A5—minor 6th = Augmented 5th
+- M6=d7—Major 6th = diminished 7th
+- m7=A6—minor 7th = Augmented 6th
+- M7=d8—Major 7th = diminished Perfect 8th (octave)
+
+The modifiers diminished, minor, Major, Augmented, and Perfect are referred to as the [*quality*](https://en.wikipedia.org/wiki/Interval_(music)#Quality) of the interval.
+
+Shrinking a Perfect interval by one semitone yields a diminished interval. Expanding a Perfect pitch by one semitone yields an Augmented interval. For example, we may modify the Perfect 5th interval between C and G like this:
+
+- [C, G↑] = [C, G♯]—A5 (same as m6)
+- **[C, G]**—**P5**
+- [C, G↓] = [C, G♭]—d5 (same as A4)
+
+Shrinking a Major interval by one semitone yields a minor interval. Shrinking a minor interval by one semitone yields a diminished interval. Expanding a Major interval by one semitone yields an Augmented interval. For example, we may modify the Major 3rd interval between C and E like this:
+
+- [C, E↑] = [C, F]—A3 (same as P4)
+- **[C, E]**—**M3**
+- [C, E↓] = [C, E♭]—m3
+- [C, E↓↓] = [C, E♭↓] = [C, D]—d3 (same as M2)
+
+A basic jazz [*chord*](https://en.wikipedia.org/wiki/Chord_(music)) is constructed out of 4 notes—1st, 3rd, 5th, and 7th—which spans the entire octave. The intervals between two adjacent chord tone determines the chord quality. At present, we will ignore advanced chords—extended, altered, suspended, etc.—, and discuss only the basic chords, whose qualities are diminished, minor, Major, and Augmented:
+
+- dim7—P1=d2, m3=A2, A4=d5, M6=d7
+- hd7—P1=d2, m3=A2, A4=d5, m7=A6
+- min6—P1=d2, m3=A2, P5=d6, M6=d7
+- min7—P1=d2, m3=A2, P5=d6, m7=A6
+- mM7—P1=d2, m3=A2, P5=d6, M7=d8
+- Maj6—P1=d2, M3=d4, P5=d6, M6=d7
+- Dom7—P1=d2, M3=d4, P5=d6, m7=A6
+- Maj7—P1=d2, M3=d4, P5=d6, M7=d8
+- Aug7—P1=d2, M3=d4, m6=A5, m7=A6
+
+The C Major 7th chord, for example, is constructed from P1=C, M3=E, m6=G, and M7=B. The intervals between the chord tones are as follows: [C, E]=M3 (4 semitones); [E, G]=m3 (3 semitones); [G, B]=M3 (4 semitones).
+
+## *underlying patterns*
+
+The above is the foundational notation, upon which all other music notations are based. In other words, this is as simple as music notation gets. Even at this simple level, the notation is already exhibiting some oddities—that is, for programmers who are accustomed to certain consistencies afforded by computer science. Programmers's creed is ["Don't repeat yourself"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY)—we do not give duplicate names to the same concept. We start counting from $0$, not $1$. We prefer open intervals like $[0, 10) = [0, 9]$, instead of closed intervals like $[C, B]$. These unwritten rules had been fashioned over the past 70 years of repeatedly rapping our heads with our keyboards, in hope of not having to repeat this unpleasantness. This decades-long experience has taught us that one of the first tasks we must perform as programmers, whenever we encounter a new problem, is to identify the commonalities, the repetitions, the patterns. We can then abstract those repetitive steps into reusable procedures.
+
+The basic jazz chord notation is inhered with a few predictably repeating patterns that we programmers may exploit:
+
+- mod 12:
+  - There are 12 notes in an octave (C, D♭, D, ..., B), then the notes repeat
+  - There are 12 intervals in an octave (P1, m2, M3, ..., M7), which repeats for every octave
+- mod 7:
+  - There are 7 notes in a scale (C Major = C, D, E, F, G, A, B), then the notes repeat
+  - There are 7 notes in a mode (C dorian = D, E, F, G, A, B, C), then the notes repeat
+
+Moreover, we may order the 9 chord qualities, from the darkest to the brightest, and group them by their tonal proximities, measured in [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance):
+
+- dim7~hd7—M6~m7
+- hd7~min6—d5~P5, m7~M6
+- min6~min7—M6~m7
+- min7~mM7—m7~M7
+- mM7~Maj6—m3~M3, M7~M6
+- Maj6~Dom7—M6~m7
+- Dom7~Maj7—m7~M7
+- Maj7~Aug7—P5~m6, M7~m7
+
+We will exploit these hidden patterns of consistency, when we synthesise code for the chord generator, later.
+
+## *user needs*
+
+The initial user requirements for the chord generator are simplistic:
+
+- List the chords for all 12 half-step notes between C and B
+  - Show the theoretically correct enharmonic note
+- Find a specific chord interactively using a menu-driven TUI
+  - Show the menu for the root note
+  - Select the root note of the chord via the prompt
+  - Show the menu for the chord type
+  - Select the chord type via the prompt
+  - Show the notes of the chord in the terminal
+
+We could easily have implemented the `find` command that accepts the root note name and the chord type and immediately prints out the chord tones. But we opted to implement the TUI, because it will become the foundation for a future GUI. The GUI will support expanded features: inversion of the chord, diatonic chords, keys, modes, scales, cycle of 5ths, etc.
+
+# SYNTHESIS
+
+This project is implemented in [TypeScript](https://www.typescriptlang.org/) as a [Node](https://nodejs.org/en) TUI application. In the future, we will progress to a desktop GUI application, using the [NodeGui](https://docs.nodegui.org/) JavaScript framework, which is based on the venerable [Qt](https://www.qt.io/product/framework) multi-platform C++ GUI framework. Since the TUI is far simpler to implement than the GUI, the TUI will serve as an exploratory medium to try out different user interaction ideas, before we expend the effort to implement the GUI.
 
 Note that despite using TypeScript, our priority is not expressing complicated types, but expressing music notations succinctly in code. And given the constrained nature of the problem domain, we can afford to forgo some type safety, for instance, by representing notes and intervals with strings, instead of defining precise types therefor.
 
 The central concepts in constructing a chord are the root note and the intervals. A triad comprises three notes and two intervals between them. A typical jazz chord consists of four notes and three intervals between them. Fortunately for us programmers, music notation has been codified, long before the advent of computing. So, we may thoroughly analyse the relevant music notation rules and all their gloriously quirky exceptions—as we did above—then implement the code that best represents our understanding thereof.
+
+## *root notes*
 
 Let us examine the module `./src/Chord.ts`. First, we need to define the type for all 12 root notes of a chord. In TypeScript, we can define the [coproduct](https://en.wikipedia.org/wiki/Coproduct) type `R` as follows.
 
@@ -85,6 +233,8 @@ This idiom of defining a type and the identically named strings is common enough
 type R = (typeof rr)[number] // type R = "C" | "Db" | ...
 ```
 
+## *intervals*
+
 Likewise, we define the 12 interval names and their corresponding coproduct type like this.
 
 ```typescript
@@ -104,6 +254,8 @@ const ii = [ // interval names (inferred type is string[])
 type I = (typeof ii)[number] // type I = "P1=d2" | "m2=A1" | ...
 ```
 
+## *chords*
+
 With the root note type `R` and the interval type `I` in hand, we may now describe the common jazz chords as a hash map, called the `Record` in TypeScript.
 
 ```typescript
@@ -122,7 +274,7 @@ const ci: Record<C, I[]> = { // chord intervals
 
 We can read the elements of `ci` as follows: the `Maj7` Major 7th chord is constructed out of the intervals `P1=d2` Perfect 1st, `M3=d4` Major 3rd, `P5=d6` Perfect 5th, and `M7=d8` Major 7th. Hence, the `C Maj7` C Major 7th chord comprises C (P1), E (M3), G (P5), and B (M7). In other words, the four-element interval list *value* associated with the chord type *key* of the *hash* `ci` defines the 1st, 3rd, 5th, and 7th notes of that chord type.
 
-Our next task is to define and construct a chord. We do this by defining the `Chord` type and the `Chord` constructor function in the `Chord.ts` module.
+Our next task is to define and construct a chord. We do this by defining the `Chord` type and the `Chord()` constructor function.
 
 ```typescript
 export type Chord = { name: string, notes: string[] }
