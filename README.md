@@ -177,14 +177,14 @@ The basic jazz chord notation is inhered with a few predictably repeating patter
 
 Moreover, we may order the 9 chord qualities, from the darkest to the brightest, and group them by their tonal proximities, measured in [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance):
 
-- dim7~hd7—M6~m7
-- hd7~min6—d5~P5, m7~M6
-- min6~min7—M6~m7
-- min7~mM7—m7~M7
-- mM7~Maj6—m3~M3, M7~M6
-- Maj6~Dom7—M6~m7
-- Dom7~Maj7—m7~M7
-- Maj7~Aug7—P5~m6, M7~m7
+- dim7→hd7—M6→m7
+- hd7→min6—d5→P5, m7→M6
+- min6→min7—M6→m7
+- min7→mM7—m7→M7
+- mM7→Maj6—m3→M3, M7→M6
+- Maj6→Dom7—M6→m7
+- Dom7→Maj7—m7→M7
+- Maj7→Aug7—P5→m6, M7→m7
 
 We will exploit these hidden patterns of consistency, when we synthesise code for the chord generator, later.
 
