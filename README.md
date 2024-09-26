@@ -49,10 +49,10 @@ This takes us to the ***chord.type*** screen, where we are presented with the ch
 - `Maj7` Major 7th
 - `Aug7` Augmented 7th
 
-When we type in `Aug7` at the `chord.type> ` prompt, we see the 1st, 3rd, 5th, and 7th notes of the A Aug7 chord, which are A-C♯-F-G.
+When we type in `Aug7` at the `chord.type> ` prompt, we see on the screen the 1st, 3rd, 5th, and 7th notes of the A Aug7 chord, which are A-C♯-F-G.
 
 ```
-A Aug7: A-C#-F-G
+  A Aug7: A-C#-F-G
 ```
 
 Typing in `b` at the `chord.type> ` prompt would exit the ***chord.type*** screen and revert back to the ***chord.root*** screen. From there, typing in another `b` would return to the main ***chord*** screen. At any prompt, typing in `^c` would terminate the application.
@@ -131,12 +131,12 @@ export function Chord(kind: C, root: R): Chord {
   function notesOf(): string[] {
     function note(interval: string, index: number): string {
       const r: number = rr.indexOf(root);
-      const d: string = ww[(ww.indexOf(root[0]) + 2 * index) % 7];
       const i: number = (r + ii.indexOf(interval)) % 12;
+      const d: string = ww[(ww.indexOf(root[0]) + 2 * index) % 7];
       const [b, x] = hh[i].split("=");
       return b[0] === d ? b : x;
     }
-    return ci[kind].map((i, x) => note(i, x));
+    return ci[kind].map((interval, index) => note(interval, index));
   }
   return {name: nameOf(), notes: notesOf()};
 }
@@ -145,9 +145,28 @@ export function Chord(kind: C, root: R): Chord {
 To construct a value of type `Chord`, we invoke the constructor function `Chord()` like this.
 
 ```typescript
-const CMaj7 = Chord(Maj7, A) // chord type = Maj7, root note = A
+const AAug7 = Chord(Aug7, A) // chord type = Aug7, root note = A
 ```
 
-Above, the `Chord()` constructor function takes the chord kind `Maj7` of type `C` and the root note `A` of type `R`, and constructs a value of type `Chord`. The `name` field of the type would be assigned the value `C Maj7`, the value returned by the inner function `nameOf()`—that is straightforward enough. But the wiggly bits are in the definition of the inner function `notesOf()`, which generates the component notes of the chord under construction.
+Above, the `Chord()` constructor function takes the chord type `Aug7` of type `C` and the root note name `A` of type `R`, and constructs a value of type `Chord`. The `name` field of the type is assigned the value `A Aug7`, the value returned by the inner function `nameOf()`—that is straightforward enough. But the wiggly bits are in the definition of the inner function `notesOf()`, which generates the component notes of the chord under construction.
 
-The `notesOf()` inner function itself contains the `note()` inner function, which does all the work of computing the note name for the interval of the $n$th note of the chord. For example, the 1st (root) note of the C Major 7th chord is C, the 3rd note is E, the 5th note is G, and the 7th note is B. This arrangement of notes is computed by the `note()` function by converting the chord's root note name into a mod-7 group index value `r` and the chord's interval name into a mod-12 group index value `i`. The `d` string value holds the mod-7 group note name of the interval. That is, for the C Major 7th chord, P1 is C, M3 is E, P5 is G, and M7 is B. The conversion from the string value `"G"` into its index value `7` is performed by the JavaScript `String.indexOf()` function. Finally, the expression `const [b, x] = hh[i].split("=")` splits the half-step enharmonic note name pair, like `"Ab=G#"`, into the ♭ `b = "Ab"` and the ♯ `x = G#`. If the first letter `b[0]` is the same as the `d` degree of the interval, the function `note()` returns the value of `b`. Otherwise, it returns the value of `x`.
+The `notesOf()` inner function itself contains the `note()` inner function, which does all the work of computing the note name for the interval of the $n$th note of the chord. Each call to `note()` passes the interval name and the zero-based interval index. For example, the index of P1 = 0, M3 = 1, P5 = 2, and M7 = 3. For the A Aug7 chord, P1 = A, M3 = C♯, m6 = F, and m7 = G. This arrangement of notes is computed by the `note()` function by converting the chord's root note name into an index value `r` and the chord's interval name into a mod-12 group index value `i`. The expression `rr.indexOf(root)` converts the root note name into its corresponding index: C = 0, D♭ = 1, D = 2, ..., B = 11. The expression `(r + ii.indexOf(interval)) % 12` converts the interval name into its corresponding mod-12 index: P1 = 0, m2 = 1, M2 = 2, ..., M7 = 11. The `%` operator ensures that the interval index value always stays in the range $[0, 11]$.
+
+As an example, we shall compute the Major 3rd note of the root note A is computed as follows:
+
+- The index `r` of A is `rr.indexOf("A") = 9`
+- The index `i` of the M3 interval of A is `(9 + 4) % 12 = 1`
+- The M3 note of A is `hh[1] = "Db=C#"`
+- The express `[b, x] = hh[i].split("=")` results in `b = "Db"` and `x = "C#"`
+
+We now need to decide the M3 of A is whether D♭ or C♯. These two notes are enharmonic, so on a musical instrument, they are played as the same note. But theoretically, they are distinct: the Major 3rd of A is C. So, the correct M3 note for the A Aug7 chord is C♯, not D♭.
+
+Let us see how this choice is computed by the expression `ww[(ww.indexOf(root[0]) + 2 * index) % 7]`. In our current example, `root[0] = "A"` and `index = 1`:
+
+- The subexpression evaluates to `ww.indexOf("A") = 5`
+- The degree index value is `(5 + 2 * 1) % 7 = 0`
+- The degree name is `ww[0] = "C"`
+- The condition `b[0] === d` evaluates to `"D" === "C" = false`
+- The return value is `x = "C#"`
+
+Hence, the Major 3rd note of the root note A is C♯.

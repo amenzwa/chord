@@ -12,12 +12,12 @@ export function Chord(kind: C, root: R): Chord {
   function notesOf(): string[] {
     function note(interval: string, index: number): string { // note at the interval
       const r: number = rr.indexOf(root); // root note index
-      const d: string = ww[(ww.indexOf(root[0]) + 2 * index) % 7]; // mod 7 group; degree index = 2 * interval index
       const i: number = (r + ii.indexOf(interval)) % 12; // mod 12 group; interval index
+      const d: string = ww[(ww.indexOf(root[0]) + 2 * index) % 7]; // mod 7 group; degree index = 2 * interval index
       const [b, x] = hh[i].split("=");
       return b[0] === d ? b : x; // select flat b or sharp x
     }
-    return ci[kind].map((i, x) => note(i, x));
+    return ci[kind].map((interval, index) => note(interval, index));
   }
   return {name: nameOf(), notes: notesOf()};
 }
