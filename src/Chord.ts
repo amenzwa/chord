@@ -7,7 +7,7 @@ export type R = (typeof rr)[number]; // root note of chords
 export type C = (typeof cc)[number]; // chords
 export type Chord = { name: string, notes: string[] } // chord
 
-export function Chord(kind: C, root: R): Chord {
+export function Chord(root: R, kind: C): Chord {
   function nameOf(): string { return `${root.split("=")[0]} ${kind}`; }
   function notesOf(): string[] {
     function note(interval: string, index: number): string { // note at the interval

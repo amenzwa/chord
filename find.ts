@@ -114,7 +114,7 @@ select a chord type for the root note ${r}:\n\
     case "Maj7":
     case "Aug7":
       const c = sub as C;
-      log(`  ${stringOf(Chord(c, r))}\n`);
+      log(`  ${stringOf(Chord(r, c))}\n`);
       break;
     case "h":
       help();

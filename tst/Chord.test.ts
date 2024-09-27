@@ -9,7 +9,7 @@ describe("Chord tests", () => {
   roots().map(r => {
     test(`test ${r} chords`, () => {
       expect(cc[r].length > 0).toBeTruthy();
-      cc[r].map(([c, nn]) => { expect(stringOf(Chord(c as C, r as R))).toEqual(`${r} ${c}: ${nn}`); });
+      cc[r].map(([c, nn]) => { expect(stringOf(Chord(r as R, c as C))).toEqual(`${r} ${c}: ${nn}`); });
     });
   });
 });

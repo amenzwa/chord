@@ -221,7 +221,7 @@ type R = "C" | "Db" | "D" | ... | "A" | "Bb" | "B"
 
 But we also need the names of these notes in half-steps, which we will use later to generate test data, user interface menus, and so on. So, we define a list of note names as follows.
 
-Musicians prefer to use flat (♭), not sharp (♯), for notational convenience. For instance, the D♯ Major scale comprises D♯, E♯, F♯♯, G♯, A♯, B♯, C♯♯, whereas the enharmonic E♭ Major scale comprises E♭, F, G, A♭, B♭, C, D. Notating, on paper, the D♯ key is like juggling with seven fine-honed [Bowie knives](https://en.wikipedia.org/wiki/Bowie_knife), but notating the tonally (practically) identical E♭ key involves dulling out just three notes, E, A, and B. The notational preference for ♭ over ♯ is clear. So, we use D♭ not C♯, E♭ not D♯, and so on.
+Musicians prefer to use flat (♭), not sharp (♯), for notational convenience. For instance, the D♯ Major scale comprises D♯, E♯, F♯♯, G♯, A♯, B♯, C♯♯, whereas the enharmonic E♭ Major scale comprises E♭, F, G, A♭, B♭, C, D. Notating, on paper, the D♯ key is like juggling with seven finely-honed [Bowie knives](https://en.wikipedia.org/wiki/Bowie_knife), but notating the tonally (practically) identical E♭ key involves dulling out just three notes, E, A, and B. The notational preference for ♭ over ♯ is clear. So, we use D♭ not C♯, E♭ not D♯, and so on.
 
 ```typescript
 const rr = ["C", "Db", "D", ..., "A", "Bb", "B"] // chord root note names
