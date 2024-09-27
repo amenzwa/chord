@@ -3,7 +3,7 @@
 
 The modern music notation is the result of many millennia of evolution. Having been invented by humans for the exclusive use of humans, the notation is full of shorthands, variations, duplications, and other oddities. Jazz chord notation in particular has accumulated many inconsistencies, through the ages. This makes implementing a jazz chord generator an interesting programming task.
 
-The most bewildering aspect of music notation is not the usage rules themselves, but the existence of many variations and exceptions to those few rules. When faced with such inconsistencies in programming, often the simplest thing to do is to manually encode both the rules and the exceptions as textual data. This approach is error prone, tiresome, uninspiring. Instead, we implement here a jazz chord generator in the fewest possible lines of code by finding a small set of consistent internal patterns that underlie the myriad outward inconsistencies.
+The most bewildering aspect of music notation is not the usage rules themselves, but the existence of many variations and exceptions to those few rules. When faced with such inconsistencies in programming, often the simplest thing to do is manually to encode both the rules and the exceptions as textual data. This approach is error prone, tiresome, uninspiring. Instead, we implement here a jazz chord generator in the fewest possible lines of code by finding a small set of consistent internal patterns that underlie the myriad outward inconsistencies.
 
 The main goal of this project, though, is to demonstrate how the solution code is synthesised from a detailed analysis of the problem domain and the definition of a set of user needs—the practice of software development. By confining ourselves to music notation, which is a codified problem domain, we are able to focus our full attention on programming, without getting mired in the complexities and the vagaries of the problem domain.
 
@@ -66,7 +66,7 @@ commands:
   h  - help (this message)
   ^c - quit (also q)
 
-chord>
+chord> r
 ```
 
 We now enter the ***chord.root*** screen shown below. Here, we select the root note of the chord we are searching by typing in one of the following: `C`, `Db`, `D`, `Eb`, `E`, `F`, `Gb`, `G`, `Ab`, `A`, `Bb`, or `B`. To select A as the root note, we type in `A` at the `chord.root> ` prompt.
@@ -79,12 +79,12 @@ select a root note for a chord:
   b  - back
   ^c - quit
 
-chord.root>
+chord.root> A
 ```
 
 This takes us to the ***chord.type*** screen shown below, where we are presented with the chord type menu. The following chords are currently supported:
 
-- `dim7—diminished 7th
+- `dim7`—diminished 7th
 - `hd7`—half-diminished 7th
 - `min6`—minor 6th
 - `min7`—minor 7th
