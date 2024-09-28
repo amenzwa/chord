@@ -211,7 +211,7 @@ Note that despite using TypeScript, our priority is not expressing complicated t
 
 The central concepts in constructing a chord are the root note and the intervals. A triad comprises three notes and two intervals between them. A typical jazz chord consists of four notes and three intervals between them. Fortunately for us programmers, music notation has been codified, long before the advent of computing. So, we may thoroughly analyse the relevant music notation rules and all their gloriously quirky exceptions—as we did above—then implement the code that best represents our understanding thereof.
 
-## *root notes*
+## *notes*
 
 Let us examine the module `./src/Chord.ts`. First, we need to define the type for all 12 root notes of a chord. In TypeScript, we can define the [coproduct](https://en.wikipedia.org/wiki/Coproduct) type `R` as follows.
 
@@ -221,7 +221,7 @@ type R = "C" | "Db" | "D" | ... | "A" | "Bb" | "B"
 
 But we also need the names of these notes in half-steps, which we will use later to generate test data, user interface menus, and so on. So, we define a list of note names as follows.
 
-Musicians prefer to use flat (♭), not sharp (♯), for notational convenience. For instance, the D♯ Major scale comprises D♯, E♯, F♯♯, G♯, A♯, B♯, C♯♯, whereas the enharmonic E♭ Major scale comprises E♭, F, G, A♭, B♭, C, D. Notating, on paper, the D♯ key is like juggling with seven finely-honed [Bowie knives](https://en.wikipedia.org/wiki/Bowie_knife), but notating the tonally (practically) identical E♭ key involves dulling out just three notes, E, A, and B. The notational preference for ♭ over ♯ is clear. So, we use D♭ not C♯, E♭ not D♯, and so on.
+Musicians prefer to use ♭ over ♯ for notational convenience. For instance, the D♯ Major scale comprises D♯, E♯, F♯♯, G♯, A♯, B♯, C♯♯, whereas the enharmonic E♭ Major scale comprises E♭, F, G, A♭, B♭, C, D. Notating, on paper, the D♯ key is like juggling with seven finely-honed [Bowie knives](https://en.wikipedia.org/wiki/Bowie_knife), but notating the tonally identical E♭ key involves dulling out just three notes, E, A, and B. The notational convenience of ♭ over ♯ is clear. So, we use D♭ not C♯, E♭ not D♯, and so on.
 
 ```typescript
 const rr = ["C", "Db", "D", ..., "A", "Bb", "B"] // chord root note names
@@ -232,6 +232,16 @@ This idiom of defining a type and the identically named strings is common enough
 ```typescript
 type R = (typeof rr)[number] // type R = "C" | "Db" | ...
 ```
+
+Note names are useful for user interfaces, but we need the corresponding note indices for computing with the mod-12 group. To convert a note name into note index, we use the JavaScript `indexOf()` function. For example, the index of the D note is `rr.indexOf("D") = 2`.
+
+We also need to know which notes are enharmonic. For that, we define the list of the half-step note names.
+
+```typescript
+const hh = ["C=C", "Db=C#", "D=D", ..., "A=A", "Bb=A#", "B=B"] // half-step note names
+```
+
+This representation, though not type safe, is compact and convenient. The name of the note itself, for instance `Db=C#`, expresses the fact that D♭ is also C♯. And by using the string `split()` function with the `=` as the separator, we can recover the flat and the sharp versions of these enharmonic notes.
 
 ## *intervals*
 
