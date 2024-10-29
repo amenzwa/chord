@@ -116,7 +116,7 @@ Typing in `b` at the `chord.type> ` prompt would exit the ***chord.type*** scree
 
 In Modern Western music, an octave is divided into 12 [equally tempered](https://en.wikipedia.org/wiki/12_equal_temperament#:~:text=12%20equal%20temperament%20(12%2DET,12√2%20≈%201.05946).) *notes*: C, D♭=C♯, D, E♭=D♯, E, F, G♭=F♯, G, A♭=G♯, A, B♭=A♯, B. The pitch separation between two adjacent notes is called the [*semitone*](https://en.wikipedia.org/wiki/Semitone) (half step). Two semitones form a tone (whole step). Equal-pitched note pairs, like D♭ and C♯, are referred to as [*enharmonic*](https://en.wikipedia.org/wiki/Enharmonic_equivalence) notes, which are conceptually distinct but tonally identical.
 
-Music notation is a 2D representation of vertically stacked frequencies that are horizontally sequenced in time. That is, the *x*-axis is time (perceived as tempo) and the *y*-axis is frequency (perceived as pitch). A melody (a tune) consists of individual notes played across time. A harmony (a chord) consists of multiple notes played at the same time. Since we are working exclusively chords here, the tempo is irrelevant to our present discussion.
+Music notation is a 2D representation of vertically stacked frequencies that are horizontally sequenced in time. That is, the *x*-axis is time (perceived as tempo) and the *y*-axis is frequency (perceived as pitch). A melody (a tune) consists of individual notes played across time. A harmony (a chord) consists of multiple notes played at the same time. Since we are working exclusively with chords here, the tempo is irrelevant to our present discussion.
 
 The pitch distance between two notes is called the [*interval*](https://en.wikipedia.org/wiki/Interval_(music)). Intervals are named as follows:
 
@@ -168,10 +168,10 @@ The above is the foundational notation, upon which all other music notations are
 
 The basic jazz chord notation is inhered with a few predictably repeating patterns that we programmers may exploit:
 
-- mod 12:
+- modulo 12:
   - There are 12 notes in an octave (C, D♭, D, ..., B), then the notes repeat
   - There are 12 intervals in an octave (P1, m2, M3, ..., M7), which repeats for every octave
-- mod 7:
+- modulo 7:
   - There are 7 notes in a scale (C Major = C, D, E, F, G, A, B), then the notes repeat
   - There are 7 notes in a mode (C dorian = D, E, F, G, A, B, C), then the notes repeat
 
