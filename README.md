@@ -7,7 +7,7 @@ The most bewildering aspect of music notation is not the usage rules themselves,
 
 The main goal of this project, though, is to demonstrate how the solution code is synthesised from a detailed analysis of the problem domain and the definition of a set of user needs—the practice of software development. By confining ourselves to music notation, which is a codified problem domain, we are able to focus our full attention on programming, without getting mired in the complexities and the vagaries of the problem domain.
 
-This project is a work-in-progress. At present, it implements only a simple chord generator for the most commonly used jazz chords. In due course, it will expand to include other musical concepts such as inversions, progressions, scales, modes, keys, and so on. But the focus shall remain always on discovering interesting programming challenges.
+This project is a work-in-progress. At present, it implements only a simple chord generator for the most commonly used jazz chords. In due course, it will expand to include other musical concepts such as inversions, suspensions, progressions, scales, modes, keys, and so on. But the focus shall remain always on discovering interesting programming challenges.
 
 # USAGE
 
@@ -164,18 +164,18 @@ The C Major 7th chord, for example, is constructed from P1=C, M3=E, m6=G, and M7
 
 ## *underlying patterns*
 
-The above is the foundational notation, upon which all other music notations are based. In other words, this is as simple as music notation gets. Even at this simple level, the notation is already exhibiting some oddities—that is, for programmers who are accustomed to certain consistencies afforded by computer science. Programmers's creed is ["Don't repeat yourself"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY)—we do not give duplicate names to the same concept. We start counting from $0$, not $1$. We prefer open intervals like $[0, 10) = [0, 9]$, instead of closed intervals like $[C, B]$. These unwritten rules had been fashioned over the past 70 years of repeatedly rapping our heads with our keyboards, in hope of not having to repeat this unpleasantness. This decades-long experience has taught us that one of the first tasks we must perform as programmers, whenever we encounter a new problem, is to identify the commonalities, the repetitions, the patterns. We can then abstract those repetitive steps into reusable procedures.
+The above is the foundational notation, upon which all other music notations are based. In other words, this is as simple as music notation gets. Even at this simple level, the notation is already exhibiting some oddities—that is, for programmers who are accustomed to certain consistencies afforded by computer science. Programmers's creed is ["Don't repeat yourself"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY)—we do not give duplicate names to the same concept. We start counting from $0$, not $1$. We prefer an open interval $[0, 8)$, instead of a closed interval $[0, 7]$, to describe the sequence $<0, 1, 2, 3, 4, 5, 6, 7>$. These conventions had been codified over the past 70 years through repeated rapping of our heads with the keyboard. This decades-long experience has taught us that one of the first tasks we must perform as programmers, whenever we encounter a new problem, is to identify the commonalities, the repetitions, the patterns. We can then abstract those repetitive steps into reusable procedures.
 
 The basic jazz chord notation is inhered with a few predictably repeating patterns that we programmers may exploit:
 
 - modulo 12:
-  - There are 12 notes in an octave (C, D♭, D, ..., B), then the notes repeat
-  - There are 12 intervals in an octave (P1, m2, M3, ..., M7), which repeats for every octave
+  - The 12 notes of an octave are named C, D♭, D, ..., B, then the notes repeat for each subsequent octave
+  - The 12 intervals of an octave are named P1, m2, M3, ..., M7
 - modulo 7:
-  - There are 7 notes in a scale (C Major = C, D, E, F, G, A, B), then the notes repeat
-  - There are 7 notes in a mode (C dorian = D, E, F, G, A, B, C), then the notes repeat
+  - The 7 notes of a scale, say C Major, are named C, D, E, F, G, A, B, then the notes repeat for each subsequent octave
+  - The 7 notes of a mode, say C Aeolian, are named A, B, C, D, E, F, G, then the notes repeat for each subsequent octave
 
-Moreover, we may order the 9 chord qualities, from the darkest to the brightest, and group them by their tonal proximities, measured in [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance):
+Moreover, we may order the 9 basic chord qualities, from the darkest to the brightest, and group them by their tonal proximities, measured in [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance):
 
 - dim7→hd7—M6→m7
 - hd7→min6—d5→P5, m7→M6
@@ -186,7 +186,7 @@ Moreover, we may order the 9 chord qualities, from the darkest to the brightest,
 - Dom7→Maj7—m7→M7
 - Maj7→Aug7—P5→m6, M7→m7
 
-We will exploit these hidden patterns of consistency, when we synthesise code for the chord generator, later.
+We will exploit these hidden patterns (structures) of consistency, when we synthesise code for the chord generator, later.
 
 ## *user needs*
 
